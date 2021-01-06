@@ -47,7 +47,16 @@ module.exports = class InfinitudePlatform {
       }.bind(this)
     );
   }
-
+	
+configureAccessory(accessory2) {
+    this.initializeZones(false).then(
+      function() {
+        this.accessories[accessory2.UUID] = accessory2;
+	this.configureSensorAccessory(accessory2);
+      }.bind(this)
+    );
+  }
+	
   async didFinishLaunching() {
     setTimeout(
       function() {
@@ -110,9 +119,9 @@ module.exports = class InfinitudePlatform {
     return SensorAccessory;
   }
   
-    configureSensorAccessory(accessory) {
+    configureSensorAccessory(accessory2) {
     const sensorName = 'Outside Temperature';
-    new InfinitudeSensor(sensorName, this.client, this.log, accessory);
+    new InfinitudeSensor(sensorName, this.client, this.log, accessory2);
   }
   
   getThermostatName(accessory) {
